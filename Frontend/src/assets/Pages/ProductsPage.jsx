@@ -8,7 +8,7 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8082/verse/products");
+        const response = await fetch("https://lpucart-u7u9.onrender.com/verse/products");
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -31,7 +31,7 @@ const ProductsPage = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:8082/verse/cart",
+        "https://lpucart-u7u9.onrender.com/verse/cart",
         { productId, quantity },
         {
           headers: { Authorization: `Bearer ${token}` },

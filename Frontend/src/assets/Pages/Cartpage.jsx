@@ -10,7 +10,7 @@ const CartPage = () => {
 
   const fetchCart = async () => {
     try {
-      const response = await fetch("http://localhost:8082/verse/cart", {
+      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/cart", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -32,7 +32,7 @@ const CartPage = () => {
     const data = { productId, quantity };
 
     try {
-      const response = await fetch("http://localhost:8082/verse/cart", {
+      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/cart", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json", // ✅ Fix: Add Content-Type header
@@ -55,7 +55,7 @@ const CartPage = () => {
 
   const checkout = async () => {
     try {
-      const res  = await fetch("http://localhost:8082/verse/cart/checkout", {
+      const res  = await fetch("https://lpucart-u7u9.onrender.com/verse/cart/checkout", {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -18,7 +18,7 @@ const ProductDetails = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:8082/verse/products/${productId}`);
+        const response = await axios.get(`https://lpucart-u7u9.onrender.com/verse/products/${productId}`);
         console.log("API Response:", response.data); // Debugging log
 
         if (response.data) {

@@ -17,7 +17,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8082/verse/auth/login", {
+      const response = await axios.post("https://lpucart-u7u9.onrender.com/verse/auth/login", {
         email,
         password,
       });

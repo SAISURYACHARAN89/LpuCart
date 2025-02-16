@@ -26,7 +26,7 @@ function SignupPage() {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://localhost:8082/verse/auth/register", {
+      const response = await axios.post("https://lpucart-u7u9.onrender.com/verse/auth/register", {
         name,
         email,
         password,
