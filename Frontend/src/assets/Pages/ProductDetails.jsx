@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -18,7 +17,8 @@ const ProductDetails = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://lpucart-u7u9.onrender.com/verse/products/${productId}`);
+        const response = await fetch(`https://lpucart-u7u9.onrender.com/verse/products/${productId}`
+        );
         console.log("API Response:", response.data); // Debugging log
 
         if (response.data) {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +8,11 @@ const ProductsPage = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("https://lpucart-u7u9.onrender.com/verse/products");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -21,7 +25,7 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
-  // ✅ Added missing function
+  // ✅ Converted `axios.post` to `fetch`
   const addProductToCart = async (productId, quantity) => {
     try {
       const token = localStorage.getItem("token");
@@ -30,18 +34,24 @@ const ProductsPage = () => {
         return;
       }
 
-      const response = await axios.post(
-        "https://lpucart-u7u9.onrender.com/verse/cart",
-        { productId, quantity },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId, quantity }),
+      });
 
-      console.log("Product added:", response.data);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Product added:", data);
       alert("Product added to cart successfully!");
     } catch (error) {
-      console.error("Error adding product to cart:", error.response?.data || error.message);
+      console.error("Error adding product to cart:", error.message);
       alert("Failed to add product to cart.");
     }
   };
@@ -74,6 +84,7 @@ const ProductsPage = () => {
   );
 };
 
+// ✅ Styling remains the same
 const styles = {
   container: {
     padding: "20px",
