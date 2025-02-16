@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-
+import { backendContext } from "./AuthContext";
 const ProductDetails = () => {
+  const {backendurl} = useContext(backendContext);
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ const ProductDetails = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://lpucart-u7u9.onrender.com/verse/products/${productId}`
+        const response = await fetch(`${backendurl}/verse/products/${productId}`
         );
         console.log("API Response:", response.data); // Debugging log
 

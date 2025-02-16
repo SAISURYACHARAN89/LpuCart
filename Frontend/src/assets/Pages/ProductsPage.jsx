@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useContext } from "react";
+import { backendContext } from "./AuthContext";
 const ProductsPage = () => {
+  const {backendurl} = useContext(backendContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://lpucart-u7u9.onrender.com/verse/products");
+        const response = await fetch(`${backendurl}/verse/products` );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -34,7 +35,7 @@ const ProductsPage = () => {
         return;
       }
 
-      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/cart", {
+      const response = await fetch(`${backendurl}/verse/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

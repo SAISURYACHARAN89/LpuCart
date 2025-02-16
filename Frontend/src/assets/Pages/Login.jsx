@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import { backendContext } from "./AuthContext";
 import "./css/Formcss.css";
 
 function Login() {
@@ -9,6 +10,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const {backendurl} = useContext(backendContext);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -17,7 +19,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/auth/login", {
+      const response = await fetch(`${backendurl}/verse/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
