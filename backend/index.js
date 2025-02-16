@@ -10,7 +10,7 @@ const app = express();
 
 // ✅ Improved CORS Configuration
 app.use(cors({
-    origin: "http://localhost:5173", // Change this to match your frontend domain
+    origin: "*", // Change this to match your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Allow credentials for authentication
