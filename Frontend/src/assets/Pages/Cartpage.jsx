@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { backendContext } from "./AuthContext";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const {backendurl} = useContext(backendContext)
   useEffect(() => {
     fetchCart();
   }, []);
 
   const fetchCart = async () => {
     try {
-      const response = await fetch("https://lpucart-vg56.onrender.com/verse/cart", {
+      const response = await fetch(`${backendurl}/verse/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -32,7 +34,7 @@ const CartPage = () => {
     const data = { productId, quantity };
 
     try {
-      const response = await fetch("https://lpucart-vg56.onrender.com/verse/cart", {
+      const response = await fetch(`${backendurl}/verse/cart`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json", // ✅ Fix: Add Content-Type header
@@ -55,7 +57,7 @@ const CartPage = () => {
 
   const checkout = async () => {
     try {
-      const res  = await fetch("https://lpucart-u7u9.onrender.com/verse/cart/checkout", {
+      const res  = await fetch(`${backendurl}/verse/cart/checkout`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });
