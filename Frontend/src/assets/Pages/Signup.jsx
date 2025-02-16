@@ -33,7 +33,7 @@ function SignupPage() {
       });
       console.log(response)
       // ✅ Store only the token string
-      const token = response.token.access.token;
+      const token = response.data.token.access.token;
       if (token) {
         localStorage.setItem("authToken", token);
         localStorage.setItem("isLogged", "true"); // Store login state
