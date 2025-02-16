@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Pages/css/Formcss.css";
 
@@ -21,19 +20,32 @@ function SignupPage() {
       setErrorMessage("Password must be at least 8 characters");
       return;
     }
-  
+
     setErrorMessage("");
     setLoading(true);
-  
+
     try {
-      const response = await axios.post("https://lpucart-u7u9.onrender.com/verse/auth/register", {
-        name,
-        email,
-        password,
+      const response = await fetch("https://lpucart-u7u9.onrender.com/verse/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
       });
-      console.log(response)
-      // ✅ Store only the token string
-      const token = response.data.token.access.token;
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          throw new Error("Invalid request");
+        } else if (response.status === 409) {
+          throw new Error("Email is already registered.");
+        } else {
+          throw new Error("Something went wrong. Please try again.");
+        }
+      }
+
+      const data = await response.json();
+      const token = data.token?.access?.token;
+
       if (token) {
         localStorage.setItem("authToken", token);
         localStorage.setItem("isLogged", "true"); // Store login state
@@ -43,19 +55,12 @@ function SignupPage() {
         setErrorMessage("Token not received. Please try again.");
       }
     } catch (error) {
-      if (error.response?.status === 400) {
-        setErrorMessage(error.response.data.error || "Invalid request");
-      } else if (error.response?.status === 409) {
-        setErrorMessage("Email is already registered.");
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
+      setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
-  
-  
+
   return (
     <div className="Formcontainer">
       <form onSubmit={(e) => e.preventDefault()}>
